@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\mahasiswa;
+use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
@@ -12,7 +12,8 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        //
+    $mahasiswa = \App\Models\Mahasiswa::all(); 
+    return view('mahasiswa.index', compact('mahasiswa'));
     }
 
     /**
@@ -20,7 +21,8 @@ class MahasiswaController extends Controller
      */
     public function create()
     {
-        //
+        // Mengarahkan ke file resources/views/mahasiswa/create.blade.php
+    return view('mahasiswa.create');
     }
 
     /**
@@ -29,12 +31,15 @@ class MahasiswaController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->except('_token');
+        Mahasiswa::create($data);
+        return redirect()->action([MahasiswaController::class, 'index']);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(mahasiswa $mahasiswa)
+    public function show(Mahasiswa $mahasiswa)
     {
         //
     }
@@ -42,7 +47,7 @@ class MahasiswaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(mahasiswa $mahasiswa)
+    public function edit(Mahasiswa $mahasiswa)
     {
         //
     }
@@ -50,7 +55,7 @@ class MahasiswaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, mahasiswa $mahasiswa)
+    public function update(Request $request, Mahasiswa $mahasiswa)
     {
         //
     }
@@ -58,8 +63,10 @@ class MahasiswaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(mahasiswa $mahasiswa)
+    public function destroy(Mahasiswa $mahasiswa)
     {
-        //
+        mahasiswa::find($id) -> delete();
+
+        return redirect() -> action ([MahasiswaControlller::class, 'index'])
     }
 }
