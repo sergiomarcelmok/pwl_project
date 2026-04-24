@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('Tempat_Lahir');
             $table->date('Tanggal_Lahir');
             $table->text('Alamat');
-             $table->text('Lokasi_Kampus');
             $table->timestamps();
         });
     }
