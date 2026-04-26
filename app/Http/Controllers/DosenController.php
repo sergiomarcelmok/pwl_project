@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\dosen;
+use App\Models\Dosen;
 use Illuminate\Http\Request;
 
 class DosenController extends Controller
@@ -34,7 +34,7 @@ class DosenController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(dosen $dosen)
+    public function show(Dosen $dosen)
     {
         //
     }
@@ -42,7 +42,7 @@ class DosenController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(dosen $dosen)
+    public function edit(Dosen $dosen)
     {
         //
     }
@@ -50,7 +50,7 @@ class DosenController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, dosen $dosen)
+    public function update(Request $request, Dosen $dosen)
     {
         //
     }
@@ -58,7 +58,7 @@ class DosenController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(dosen $dosen)
+    public function destroy(Dosen $dosen)
     {
         //
     }

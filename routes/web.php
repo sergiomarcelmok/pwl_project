@@ -1,19 +1,21 @@
 <?php
 
-use
-Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahasiswaController;
+use Illuminate\Support\Facades\Route;
 
-route::get('/', function () {
+Route::get('/welcome', function () {
     return view('welcome');
 });
 
-route::get('/mahasiswa', [MahasiswaController::class, 'index']);
-route::get('/mahasiswa/{id}', [MahasiswaController::class, 'show']);
-route::get('/mahasiswa-create',[MahasiswaController::class,'create'])->name('mahasiswa.create');
-route::post('/mahasiswa',[MahasiswaController::class,'store'])->name('mahasiswa.save');
-route::get('/mahasiswa-edit/{id}', [MahasiswaController::class,'edit']);
-route::get('/mahasiswa/{id}', [MahasiswaController::class, 'update'])->name ('mahasiswa.edit');
-route::delete('/mahasiswa/{id}', [MahasiswaController::class, 'destroy'])->name(',mahasiswa.delete');
+Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
+Route::get('/mahasiswa/{id}', [MahasiswaController::class, 'show']);
+Route::get('/mahasiswa-create', [MahasiswaController::class, 'create'])->name('mahasiswa.add');
+Route::post('/mahasiswa', [MahasiswaController::class, 'store'])->name('mahasiswa.save');
+Route::get('/mahasiswa-edit/{id}', [MahasiswaController::class, 'edit'])->name('mahasiswa.update');
+Route::put('/mahasiswa/{id}', [MahasiswaController::class, 'update'])->name('mahasiswa.edit');
+Route::delete('/mahasiswa/{id}', [MahasiswaController::class, 'destroy'])->name('mahasiswa.delete');
 
 
+Route::get('/cek-db', function () {
+    return config('database.default');
+});
