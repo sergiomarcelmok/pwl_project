@@ -12,7 +12,7 @@ class Mahasiswa extends Model
         'Fullname',
         'NIM',
         'NIDN',
-        'tempat_lahir',
+        'Tempat_Lahir',
         'Tanggal_Lahir',
         'Alamat'
     ];

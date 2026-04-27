@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dosen;
+use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 
-class DosenController extends Controller
+class MatakuliahController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('dosen.index', [
-            'dosen' => Dosen::all()
+        return view('Matakuliah.index', [
+            'mata_kuliah' => Matakuliah::all()
         ]);
     }
 
@@ -22,7 +22,7 @@ class DosenController extends Controller
      */
     public function create()
     {
-        return view('dosen.create');
+        return view('mata_kuliah.create');
     }
 
     /**
@@ -32,9 +32,9 @@ class DosenController extends Controller
     {
         $data = $request->except('_token');
 
-        Dosen::create($data);
+        Matakuliah::create($data);
 
-        return redirect()->action([DosenController::class, 'index']);
+        return redirect()->action([MatakuliahController::class, 'index']);
     }
 
     /**
@@ -42,7 +42,7 @@ class DosenController extends Controller
      */
     public function show($id)
     {
-        return Dosen::find($id);
+        return Matakuliah::find($id);
     }
 
     /**
@@ -50,8 +50,8 @@ class DosenController extends Controller
      */
     public function edit($id)
     {
-        return view('dosen.edit', [
-            'dosen' => Dosen::find($id)
+        return view('mata_kuliah.edit', [
+            'mata_kuliah' => Matakuliah::find($id)
         ]);
     }
 
@@ -60,11 +60,11 @@ class DosenController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $data = $request->except('_token', 'id', '_method');
+        $data = $request->except('_token', 'id', '_method');
 
-        Dosen::find($id)->update($data);
+        Matakuliah::findOrFail($id)->update($data);
 
-        return redirect()->action([DosenController::class, 'index']);
+        return redirect()->action([MatakuliahController::class, 'index']);
     }
 
     /**
@@ -72,8 +72,8 @@ class DosenController extends Controller
      */
     public function destroy($id)
     {
-        Dosen::find($id)->delete();//
+        Matakuliah::findOrFail($id)->delete();
 
-        return redirect()->action([DosenController::class, 'index']);
+        return redirect()->action([MatakuliahController::class, 'index']);
     }
-    }
+}

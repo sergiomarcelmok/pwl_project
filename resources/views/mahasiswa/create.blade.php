@@ -28,7 +28,7 @@
             <tr>
                 <td>Tempat Lahir</td>
                 <td>:</td>
-                <td><input type="text" name="tempat_lahir"></td>
+                <td><input type="text" name="Tempat_Lahir"></td>
             </tr>
             <tr>
                 <td>Tanggal Lahir</td>
