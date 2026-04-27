@@ -13,7 +13,7 @@ class MatakuliahController extends Controller
     public function index()
     {
         return view('Matakuliah.index', [
-            'mata_kuliah' => Matakuliah::all()
+            'matakuliah' => Matakuliah::all()
         ]);
     }
 
