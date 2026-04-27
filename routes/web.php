@@ -15,7 +15,3 @@ Route::get('/mahasiswa-edit/{id}', [MahasiswaController::class, 'edit'])->name('
 Route::put('/mahasiswa/{id}', [MahasiswaController::class, 'update'])->name('mahasiswa.edit');
 Route::delete('/mahasiswa/{id}', [MahasiswaController::class, 'destroy'])->name('mahasiswa.delete');
 
-
-Route::get('/cek-db', function () {
-    return config('database.default');
-});

@@ -21,7 +21,7 @@
         <tr>
             <td>Tempat Lahir</td>
             <td>:</td>
-            <td><input type="text" name="tempat_Lahir" value="{{$mahasiswa->tempat_Lahir}}"></td>
+            <td><input type="text" name="tempat_lahir" value="{{$mahasiswa->tempat_lahir}}"></td>
         </tr>
         <tr>
             <td>Tanggal Lahir</td>
