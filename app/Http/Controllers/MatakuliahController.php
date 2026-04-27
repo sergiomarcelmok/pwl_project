@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Mahasiswa;
+use App\Models\Matakuliah;
 use Illuminate\Http\Request;
 
 class MatakuliahController extends Controller
@@ -22,7 +22,7 @@ class MatakuliahController extends Controller
      */
     public function create()
     {
-        return view('mata_kuliah.create');
+        return view('matakuliah.create');
     }
 
     /**
@@ -50,8 +50,8 @@ class MatakuliahController extends Controller
      */
     public function edit($id)
     {
-        return view('mata_kuliah.edit', [
-            'mata_kuliah' => Matakuliah::find($id)
+        return view('matakuliah.edit', [
+            'matakuliah' => Matakuliah::find($id)
         ]);
     }
 
