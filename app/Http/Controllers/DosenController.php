@@ -12,7 +12,7 @@ class DosenController extends Controller
      */
     public function index()
     {
-        return view('dashboard', [
+        return view('dosen.index', [
             'dosen' => Dosen::all()
         ]);
     }
