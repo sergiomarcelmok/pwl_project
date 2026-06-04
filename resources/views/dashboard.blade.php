@@ -96,7 +96,24 @@
                                 Mata Kuliah
                             </a>
                         </li>
-
+                         <li>
+                            <a class="dropdown-item"
+                            href="{{ action([App\Http\Controllers\KelasController::class, 'index']) }}">
+                                Kelas
+                            </a>
+                        </li>
+                         <li>
+                            <a class="dropdown-item"
+                            href="{{ action([App\Http\Controllers\KrsController::class, 'index']) }}">
+                                KRS
+                            </a>
+                        </li>
+                         <li>
+                            <a class="dropdown-item"
+                            href="{{ action([App\Http\Controllers\KrsDetailController::class, 'index']) }}">
+                                KRS Detail
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>

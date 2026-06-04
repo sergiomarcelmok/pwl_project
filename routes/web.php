@@ -5,6 +5,8 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\MatakuliahController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\KrsController;
+use App\Http\Controllers\KrsDetailController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -53,3 +55,15 @@ Route::get('/kelas', [KelasController::class, 'index']);
 Route::get('/kelas/create', [KelasController::class, 'create']);
 Route::post('/kelas/store', [KelasController::class, 'store']);
 Route::delete('/kelas/{id}', [KelasController::class, 'destroy']);
+
+
+Route::get('/krs', [KrsController::class, 'index']);
+Route::get('/krs/create', [KrsController::class, 'create']);
+Route::post('/krs/store', [KrsController::class, 'store']);
+Route::delete('/krs/{id}', [KrsController::class, 'destroy']);
+
+
+Route::get('/krs-detail', [KrsDetailController::class, 'index']);
+Route::get('/krs-detail/create', [KrsDetailController::class, 'create']);
+Route::post('/krs-detail/store', [KrsDetailController::class, 'store']);
+Route::delete('/krs-detail/{id}', [KrsDetailController::class, 'destroy']);
