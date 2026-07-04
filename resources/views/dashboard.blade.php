@@ -118,16 +118,22 @@
                 </li>
             </ul>
 
-            <form class="d-flex">
-                <input class="form-control me-2"
-                    type="search"
-                    placeholder="Search">
+@auth
+<div class="d-flex align-items-center">
 
-                <button class="btn btn-success"
-                    type="submit">
-                    Search
-                </button>
-            </form>
+    <span class="me-3 fw-semibold">
+        Halo, {{ Auth::user()->name }}
+    </span>
+
+    <form action="{{ route('logout') }}" method="POST">
+        @csrf
+        <button type="submit" class="btn btn-outline-danger">
+            Logout
+        </button>
+    </form>
+
+</div>
+@endauth
 
         </div>
     </div>
