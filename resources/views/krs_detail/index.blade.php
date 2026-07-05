@@ -1,52 +1,156 @@
-<a href="/krs-detail/create">
-    <input type="button" value="Create">
-</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data KRS Detail</title>
 
-<table border="1">
+    <style>
 
-    <thead>
-        <th>No</th>
-        <th>Kode KRS</th>
-        <th>Kode Kelas</th>
-        <th>Status</th>
-        <th>Tanggal Dibuat</th>
-        <th>Aksi</th>
-    </thead>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
+        }
 
-    @foreach ($krsdetail as $m)
-    <tr>
+        body{
+            background:#f4f6f9;
+            padding:30px;
+        }
 
-        <td>{{ $m->id }}</td>
+        .container{
+            max-width:1300px;
+            margin:auto;
+        }
 
-        <td>
-            {{ $m->kode_krs }}
-        </td>
+        h1{
+            color:#1e3a8a;
+            margin-bottom:20px;
+        }
 
-        <td>
-            {{ $m->kelas->kode_kelas }}
-        </td>
+        .btn-create{
+            display:inline-block;
+            text-decoration:none;
+            background:#16a34a;
+            color:white;
+            padding:10px 18px;
+            border-radius:8px;
+            margin-bottom:20px;
+            font-weight:bold;
+        }
 
-        <td>{{ $m->status }}</td>
+        .btn-create:hover{
+            background:#15803d;
+        }
 
-        <td>{{ $m->created_at }}</td>
+        table{
+            width:100%;
+            border-collapse:collapse;
+            background:white;
+            box-shadow:0 5px 15px rgba(0,0,0,.1);
+            border-radius:10px;
+            overflow:hidden;
+        }
 
-        <td>
-            <form action="/krs-detail/{{ $m->id }}"
-                  method="post">
+        th{
+            background:#1e3a8a;
+            color:white;
+            padding:14px;
+        }
 
-                @csrf
+        td{
+            padding:12px;
+            text-align:center;
+            border-bottom:1px solid #ddd;
+        }
 
-                <input type="hidden"
-                       name="_method"
-                       value="DELETE">
+        tr:hover{
+            background:#eef5ff;
+        }
 
-                <input type="submit"
-                       value="Delete">
+        .btn-delete{
+            background:#dc2626;
+            color:white;
+            border:none;
+            padding:8px 15px;
+            border-radius:6px;
+            cursor:pointer;
+        }
 
-            </form>
-        </td>
+        .btn-delete:hover{
+            background:#b91c1c;
+        }
 
-    </tr>
-    @endforeach
+    </style>
 
-</table>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📋 Data KRS Detail</h1>
+
+    <a href="/krs-detail/create" class="btn-create">
+        + Tambah KRS Detail
+    </a>
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>No</th>
+                <th>Kode KRS</th>
+                <th>Kode Kelas</th>
+                <th>Status</th>
+                <th>Tanggal Dibuat</th>
+                <th>Aksi</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        @foreach ($krsdetail as $m)
+
+            <tr>
+
+                <td>{{ $m->id }}</td>
+
+                <td>{{ $m->kode_krs }}</td>
+
+                <td>{{ $m->kelas->kode_kelas }}</td>
+
+                <td>{{ $m->status }}</td>
+
+                <td>{{ $m->created_at }}</td>
+
+                <td>
+
+                    <form action="/krs-detail/{{ $m->id }}" method="POST">
+
+                        @csrf
+                        @method('DELETE')
+
+                        <button class="btn-delete">
+                            Delete
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+
+        @endforeach
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</body>
+</html>
