@@ -37,11 +37,11 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 /*
 |--------------------------------------------------------------------------
-| Protected Route
+| ADMIN
 |--------------------------------------------------------------------------
 */
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth','role:admin'])->group(function () {
 
     // Mahasiswa
     Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
@@ -85,16 +85,33 @@ Route::middleware('auth')->group(function () {
     Route::post('/kelas/store', [KelasController::class, 'store']);
     Route::delete('/kelas/{id}', [KelasController::class, 'destroy']);
 
+});
+
+/*
+|--------------------------------------------------------------------------
+| KRS & KRS DETAIL
+|--------------------------------------------------------------------------
+| Bisa diakses Admin, Dosen, dan Mahasiswa
+*/
+
+Route::middleware(['auth','role:admin,dosen,mahasiswa'])->group(function () {
+
     // KRS
     Route::get('/krs', [KrsController::class, 'index']);
     Route::get('/krs/create', [KrsController::class, 'create']);
     Route::post('/krs/store', [KrsController::class, 'store']);
     Route::delete('/krs/{id}', [KrsController::class, 'destroy']);
 
+    Route::put('/krs/{id}/approve', [KrsController::class, 'approve']);
+    Route::put('/krs/{id}/reject', [KrsController::class, 'reject']);
+
     // KRS Detail
     Route::get('/krs-detail', [KrsDetailController::class, 'index']);
     Route::get('/krs-detail/create', [KrsDetailController::class, 'create']);
     Route::post('/krs-detail/store', [KrsDetailController::class, 'store']);
     Route::delete('/krs-detail/{id}', [KrsDetailController::class, 'destroy']);
+
+    Route::put('/krs-detail/{id}/approve', [KrsDetailController::class, 'approve']);
+    Route::put('/krs-detail/{id}/reject', [KrsDetailController::class, 'reject']);
 
 });

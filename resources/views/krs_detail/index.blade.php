@@ -1,156 +1,193 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data KRS Detail</title>
 
-    <style>
+@extends('layouts.app')
 
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial, Helvetica, sans-serif;
-        }
+@section('content')
 
-        body{
-            background:#f4f6f9;
-            padding:30px;
-        }
+<div class="card shadow">
 
-        .container{
-            max-width:1300px;
-            margin:auto;
-        }
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
 
-        h1{
-            color:#1e3a8a;
-            margin-bottom:20px;
-        }
+        <h4 class="mb-0">
+            Data KRS Detail
+        </h4>
 
-        .btn-create{
-            display:inline-block;
-            text-decoration:none;
-            background:#16a34a;
-            color:white;
-            padding:10px 18px;
-            border-radius:8px;
-            margin-bottom:20px;
-            font-weight:bold;
-        }
+        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'mahasiswa')
+        <a href="/krs-detail/create"
+           class="btn btn-success">
 
-        .btn-create:hover{
-            background:#15803d;
-        }
+            + Tambah KRS Detail
 
-        table{
-            width:100%;
-            border-collapse:collapse;
-            background:white;
-            box-shadow:0 5px 15px rgba(0,0,0,.1);
-            border-radius:10px;
-            overflow:hidden;
-        }
+        </a>
+        @endif
 
-        th{
-            background:#1e3a8a;
-            color:white;
-            padding:14px;
-        }
+    </div>
 
-        td{
-            padding:12px;
-            text-align:center;
-            border-bottom:1px solid #ddd;
-        }
+    <div class="card-body">
 
-        tr:hover{
-            background:#eef5ff;
-        }
+        <div class="table-responsive">
 
-        .btn-delete{
-            background:#dc2626;
-            color:white;
-            border:none;
-            padding:8px 15px;
-            border-radius:6px;
-            cursor:pointer;
-        }
+            <table class="table table-bordered table-hover align-middle">
 
-        .btn-delete:hover{
-            background:#b91c1c;
-        }
+                <thead class="table-dark">
 
-    </style>
+                    <tr>
 
-</head>
+                        <th>No</th>
+                        <th>KRS</th>
+                        <th>Kelas</th>
+                        <th>Status</th>
+                        <th>Tanggal Dibuat</th>
+                        <th width="220">Aksi</th>
 
-<body>
+                    </tr>
 
-<div class="container">
+                </thead>
 
-    <h1>📋 Data KRS Detail</h1>
+                <tbody>
 
-    <a href="/krs-detail/create" class="btn-create">
-        + Tambah KRS Detail
-    </a>
+                @forelse($krsdetail as $m)
 
-    <table>
+                    <tr>
 
-        <thead>
+                        <td>{{ $m->id }}</td>
 
-            <tr>
-                <th>No</th>
-                <th>Kode KRS</th>
-                <th>Kode Kelas</th>
-                <th>Status</th>
-                <th>Tanggal Dibuat</th>
-                <th>Aksi</th>
-            </tr>
+                        <td>KRS #{{ $m->kode_krs }}</td>
 
-        </thead>
+                        <td>{{ $m->kelas->kode_kelas }}</td>
 
-        <tbody>
+                        <td>
 
-        @foreach ($krsdetail as $m)
+                            @if($m->status == 'approved')
 
-            <tr>
+                                <span class="badge bg-success">
+                                    Approved
+                                </span>
 
-                <td>{{ $m->id }}</td>
+                            @elseif($m->status == 'pending')
 
-                <td>{{ $m->kode_krs }}</td>
+                                <span class="badge bg-warning text-dark">
+                                    Pending
+                                </span>
 
-                <td>{{ $m->kelas->kode_kelas }}</td>
+                            @elseif($m->status == 'declined')
 
-                <td>{{ $m->status }}</td>
+                                <span class="badge bg-danger">
+                                    Declined
+                                </span>
 
-                <td>{{ $m->created_at }}</td>
+                            @else
 
-                <td>
+                                <span class="badge bg-secondary">
+                                    {{ ucfirst($m->status) }}
+                                </span>
 
-                    <form action="/krs-detail/{{ $m->id }}" method="POST">
+                            @endif
 
-                        @csrf
-                        @method('DELETE')
+                        </td>
 
-                        <button class="btn-delete">
-                            Delete
-                        </button>
+                        <td>{{ $m->created_at }}</td>
 
-                    </form>
+                        <td>
 
-                </td>
+                            {{-- ADMIN --}}
+                            @if(Auth::user()->role == 'admin')
 
-            </tr>
+                                <form action="/krs-detail/{{ $m->id }}"
+                                      method="POST"
+                                      class="d-inline">
 
-        @endforeach
+                                    @csrf
+                                    @method('DELETE')
 
-        </tbody>
+                                    <button
+                                        class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Yakin ingin menghapus data ini?')">
 
-    </table>
+                                        Delete
+
+                                    </button>
+
+                                </form>
+
+                            @endif
+
+                            {{-- DOSEN --}}
+                            @if(Auth::user()->role == 'dosen')
+
+                                @if($m->status == 'pending')
+
+                                    <form action="/krs-detail/{{ $m->id }}/approve"
+                                          method="POST"
+                                          class="d-inline">
+
+                                        @csrf
+                                        @method('PUT')
+
+                                        <button class="btn btn-success btn-sm">
+
+                                            Approve
+
+                                        </button>
+
+                                    </form>
+
+                                    <form action="/krs-detail/{{ $m->id }}/reject"
+                                          method="POST"
+                                          class="d-inline">
+
+                                        @csrf
+                                        @method('PUT')
+
+                                        <button class="btn btn-warning btn-sm">
+
+                                            Reject
+
+                                        </button>
+
+                                    </form>
+
+                                @endif
+
+                            @endif
+
+                            {{-- MAHASISWA --}}
+                            @if(Auth::user()->role == 'mahasiswa')
+
+                                <span class="text-muted">
+
+                                    -
+
+                                </span>
+
+                            @endif
+
+                        </td>
+
+                    </tr>
+
+                @empty
+
+                    <tr>
+
+                        <td colspan="6"
+                            class="text-center">
+
+                            Belum ada data KRS Detail.
+
+                        </td>
+
+                    </tr>
+
+                @endforelse
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
 
 </div>
 
-</body>
-</html>
+@endsection

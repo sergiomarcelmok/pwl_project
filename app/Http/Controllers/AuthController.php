@@ -40,6 +40,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'mahasiswa',
         ]);
 
         return redirect('/login')->with('success', 'Register berhasil, silakan login.');
@@ -59,7 +60,7 @@ class AuthController extends Controller
 
             $request->session()->regenerate();
 
-            return redirect()->intended('/mahasiswa');
+            return redirect('/');
         }
 
         return back()->withErrors([

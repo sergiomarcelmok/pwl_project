@@ -45,6 +45,29 @@ class KrsController extends Controller
 
         return redirect('/krs');
     }
+    // Approve KRS
+    public function approve($id)
+    {
+        $krs = Krs::findOrFail($id);
+
+        $krs->status = 'approved';
+
+        $krs->save();
+
+        return redirect('/krs');
+    }
+
+    // Reject KRS
+    public function reject($id)
+    {
+        $krs = Krs::findOrFail($id);
+
+        $krs->status = 'declined';
+
+        $krs->save();
+
+        return redirect('/krs');
+    }
 
     // Hapus
     public function destroy($id)

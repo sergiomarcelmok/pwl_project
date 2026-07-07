@@ -53,6 +53,31 @@ class KrsDetailController extends Controller
         return redirect('/krs-detail');
     }
 
+    // Approve KRS Detail
+public function approve($id)
+{
+    $detail = KrsDetail::findOrFail($id);
+
+    $detail->status = 'approved';
+
+    $detail->save();
+
+    return redirect('/krs-detail');
+}
+
+
+    // Reject KRS Detail
+    public function reject($id)
+    {
+        $detail = KrsDetail::findOrFail($id);
+
+        $detail->status = 'declined';
+
+        $detail->save();
+
+        return redirect('/krs-detail');
+    }
+
     // Hapus
     public function destroy($id)
     {
@@ -61,3 +86,4 @@ class KrsDetailController extends Controller
         return redirect('/krs-detail');
     }
 }
+
