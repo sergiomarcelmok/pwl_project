@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('content')
@@ -8,16 +7,20 @@
     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
 
         <h4 class="mb-0">
+
             Data KRS Detail
+
         </h4>
 
         @if(Auth::user()->role == 'admin' || Auth::user()->role == 'mahasiswa')
-        <a href="/krs-detail/create"
-           class="btn btn-success">
 
-            + Tambah KRS Detail
+            <a href="/krs-detail/create"
+               class="btn btn-success">
 
-        </a>
+                + Tambah KRS Detail
+
+            </a>
+
         @endif
 
     </div>
@@ -37,7 +40,10 @@
                         <th>Kelas</th>
                         <th>Status</th>
                         <th>Tanggal Dibuat</th>
-                        <th width="220">Aksi</th>
+
+                        @if(Auth::user()->role != 'mahasiswa')
+                            <th width="220">Aksi</th>
+                        @endif
 
                     </tr>
 
@@ -60,25 +66,33 @@
                             @if($m->status == 'approved')
 
                                 <span class="badge bg-success">
+
                                     Approved
+
                                 </span>
 
                             @elseif($m->status == 'pending')
 
                                 <span class="badge bg-warning text-dark">
+
                                     Pending
+
                                 </span>
 
                             @elseif($m->status == 'declined')
 
                                 <span class="badge bg-danger">
+
                                     Declined
+
                                 </span>
 
                             @else
 
                                 <span class="badge bg-secondary">
+
                                     {{ ucfirst($m->status) }}
+
                                 </span>
 
                             @endif
@@ -86,6 +100,8 @@
                         </td>
 
                         <td>{{ $m->created_at }}</td>
+
+                        @if(Auth::user()->role != 'mahasiswa')
 
                         <td>
 
@@ -150,26 +166,18 @@
 
                             @endif
 
-                            {{-- MAHASISWA --}}
-                            @if(Auth::user()->role == 'mahasiswa')
-
-                                <span class="text-muted">
-
-                                    -
-
-                                </span>
-
-                            @endif
-
                         </td>
 
+                        @endif
+
                     </tr>
+
 
                 @empty
 
                     <tr>
 
-                        <td colspan="6"
+                        <td colspan="{{ Auth::user()->role == 'mahasiswa' ? 5 : 6 }}"
                             class="text-center">
 
                             Belum ada data KRS Detail.

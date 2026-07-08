@@ -7,15 +7,21 @@
     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
 
         <h4 class="mb-0">
+
             Data KRS
+
         </h4>
 
-        <a href="/krs/create"
-           class="btn btn-success">
+        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'mahasiswa')
 
-            + Tambah KRS
+            <a href="/krs/create"
+               class="btn btn-success">
 
-        </a>
+                + Tambah KRS
+
+            </a>
+
+        @endif
 
     </div>
 
@@ -36,7 +42,10 @@
                         <th>Status</th>
                         <th>Total SKS</th>
                         <th>Tanggal Dibuat</th>
-                        <th width="220">Aksi</th>
+
+                        @if(Auth::user()->role != 'mahasiswa')
+                            <th width="220">Aksi</th>
+                        @endif
 
                     </tr>
 
@@ -90,9 +99,10 @@
 
                         <td>{{ $m->created_at }}</td>
 
+                        @if(Auth::user()->role != 'mahasiswa')
+
                         <td>
 
-                            {{-- ADMIN --}}
                             @if(Auth::user()->role == 'admin')
 
                                 <form action="/krs/{{ $m->id }}"
@@ -114,8 +124,6 @@
 
                             @endif
 
-
-                            {{-- DOSEN --}}
                             @if(Auth::user()->role == 'dosen')
 
                                 <form action="/krs/{{ $m->id }}/approve"
@@ -125,8 +133,7 @@
                                     @csrf
                                     @method('PUT')
 
-                                    <button
-                                        class="btn btn-success btn-sm">
+                                    <button class="btn btn-success btn-sm">
 
                                         Approve
 
@@ -141,8 +148,7 @@
                                     @csrf
                                     @method('PUT')
 
-                                    <button
-                                        class="btn btn-warning btn-sm">
+                                    <button class="btn btn-warning btn-sm">
 
                                         Reject
 
@@ -152,19 +158,9 @@
 
                             @endif
 
-
-                            {{-- MAHASISWA --}}
-                            @if(Auth::user()->role == 'mahasiswa')
-
-                                <span class="text-muted">
-
-                                    -
-
-                                </span>
-
-                            @endif
-
                         </td>
+
+                        @endif
 
                     </tr>
 
@@ -172,7 +168,7 @@
 
                     <tr>
 
-                        <td colspan="8"
+                        <td colspan="{{ Auth::user()->role == 'mahasiswa' ? 7 : 8 }}"
                             class="text-center">
 
                             Belum ada data KRS.

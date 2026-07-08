@@ -22,7 +22,7 @@ class MahasiswaController extends Controller
      */
     public function create()
     {
-        return view('mahasiswa.create', []);
+        return view('mahasiswa.create');
     }
 
     /**
@@ -30,12 +30,12 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        
         $data = $request->except('_token');
 
         Mahasiswa::create($data);
 
-        return redirect()->action([MahasiswaController::class, 'index']);
+        return redirect()->action([MahasiswaController::class, 'index'])
+            ->with('success', 'Data mahasiswa berhasil ditambahkan.');
     }
 
     /**
@@ -61,21 +61,22 @@ class MahasiswaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->except('_token', 'id', '_method');
+        $data = $request->except('_token', '_method', 'id');
 
         Mahasiswa::find($id)->update($data);
 
-        return redirect()->action([MahasiswaController::class, 'index']);
+        return redirect()->action([MahasiswaController::class, 'index'])
+            ->with('success', 'Data mahasiswa berhasil diperbarui.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id) // Tambahkan $id di sini
-{
-    // Cari data berdasarkan ID lalu hapus
-    \App\Models\Mahasiswa::find($id)->delete();
+    public function destroy($id)
+    {
+        Mahasiswa::findOrFail($id)->delete();
 
-    return redirect()->action([MahasiswaController::class, 'index']);
-}
+        return redirect()->action([MahasiswaController::class, 'index'])
+            ->with('success', 'Data mahasiswa berhasil dihapus.');
+    }
 }

@@ -13,7 +13,7 @@ class MatakuliahController extends Controller
     public function index()
     {
         return view('matakuliah.index', [
-            'matakuliah' => matakuliah::all()
+            'matakuliah' => Matakuliah::all()
         ]);
     }
 
@@ -34,7 +34,8 @@ class MatakuliahController extends Controller
 
         Matakuliah::create($data);
 
-        return redirect()->action([MatakuliahController::class, 'index']);
+        return redirect()->action([MatakuliahController::class, 'index'])
+            ->with('success', 'Data mata kuliah berhasil ditambahkan.');
     }
 
     /**
@@ -60,11 +61,12 @@ class MatakuliahController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->except('_token', 'id', '_method');
+        $data = $request->except('_token', '_method', 'id');
 
         Matakuliah::findOrFail($id)->update($data);
 
-        return redirect()->action([MatakuliahController::class, 'index']);
+        return redirect()->action([MatakuliahController::class, 'index'])
+            ->with('success', 'Data mata kuliah berhasil diperbarui.');
     }
 
     /**
@@ -74,6 +76,7 @@ class MatakuliahController extends Controller
     {
         Matakuliah::findOrFail($id)->delete();
 
-        return redirect()->action([MatakuliahController::class, 'index']);
+        return redirect()->action([MatakuliahController::class, 'index'])
+            ->with('success', 'Data mata kuliah berhasil dihapus.');
     }
 }

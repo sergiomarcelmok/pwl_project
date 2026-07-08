@@ -74,30 +74,6 @@
 
                     </div>
 
-                    <div class="mb-4">
-
-                        <label class="form-label">
-                            Status
-                        </label>
-
-                        <select name="status"
-                                class="form-select">
-
-                            <option value="pending">
-                                Pending
-                            </option>
-
-                            <option value="approved">
-                                Approved
-                            </option>
-
-                            <option value="declined">
-                                Declined
-                            </option>
-
-                        </select>
-
-                    </div>
 
                     <div class="d-flex justify-content-between">
 

@@ -99,20 +99,7 @@
 
                     <div class="mb-3">
 
-                        <label class="form-label">
-                            Status
-                        </label>
-
-                        <select name="status"
-                                class="form-select">
-
-                            <option value="pending">Pending</option>
-                            <option value="approved">Approved</option>
-                            <option value="partial">Partial</option>
-                            <option value="declined">Declined</option>
-
-                        </select>
-
+                     
                     </div>
 
                     <div class="mb-4">
